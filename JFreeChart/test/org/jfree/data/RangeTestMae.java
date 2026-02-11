@@ -6,126 +6,145 @@ import org.junit.jupiter.api.Test;
 class RangeTestMae {
 
     // ---------------------------
-    // getCentralValue()
+    // getCentralValue() Tests
     // ---------------------------
 
     @Test
-    void testCentralValueSymmetricRange() {
-        Range r = new Range(-5, 5);
-        assertEquals(0, r.getCentralValue(), 0.0001);
+    void testGetCentralValueTypicalRange() {
+        Range r = new Range(2.0, 10.0);
+        assertEquals(6.0, r.getCentralValue(), 0.0001);
     }
 
     @Test
-    void testCentralValuePositiveRange() {
-        Range r = new Range(2, 6);
-        assertEquals(4, r.getCentralValue(), 0.0001);
+    void testGetCentralValueNegativeRange() {
+        Range r = new Range(-10.0, -2.0);
+        assertEquals(-6.0, r.getCentralValue(), 0.0001);
     }
 
     @Test
-    void testCentralValueSinglePointRange() {
-        Range r = new Range(3, 3);
-        assertEquals(3, r.getCentralValue(), 0.0001);
-    }
-
-    // ---------------------------
-    // contains()
-    // ---------------------------
-
-    @Test
-    void testContainsValueInsideRange() {
-        Range r = new Range(0, 10);
-        assertTrue(r.contains(5));
+    void testGetCentralValueMixedRange() {
+        Range r = new Range(-4.0, 6.0);
+        assertEquals(1.0, r.getCentralValue(), 0.0001);
     }
 
     @Test
-    void testContainsValueAtLowerBoundary() {
-        Range r = new Range(0, 10);
-        assertTrue(r.contains(0));
-    }
-
-    @Test
-    void testContainsValueAtUpperBoundary() {
-        Range r = new Range(0, 10);
-        assertTrue(r.contains(10));
-    }
-
-    @Test
-    void testContainsValueBelowRange() {
-        Range r = new Range(0, 10);
-        assertFalse(r.contains(-1));
-    }
-
-    @Test
-    void testContainsValueAboveRange() {
-        Range r = new Range(0, 10);
-        assertFalse(r.contains(11));
+    void testGetCentralValueSingleValue() {
+        Range r = new Range(5.0, 5.0);
+        assertEquals(5.0, r.getCentralValue(), 0.0001);
     }
 
     // ---------------------------
-    // intersects()
+    // contains(double) Tests
     // ---------------------------
 
     @Test
-    void testIntersectsOverlappingRanges() {
-        Range r = new Range(0, 10);
-        assertTrue(r.intersects(5, 15));
+    void testContainsInside() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.contains(10.0));
     }
 
     @Test
-    void testIntersectsContainedRange() {
-        Range r = new Range(0, 10);
-        assertTrue(r.intersects(2, 8));
+    void testContainsLowerBoundary() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.contains(5.0));
+    }
+
+    @Test
+    void testContainsUpperBoundary() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.contains(15.0));
+    }
+
+    @Test
+    void testContainsBelowRange() {
+        Range r = new Range(5.0, 15.0);
+        assertFalse(r.contains(4.0));
+    }
+
+    @Test
+    void testContainsAboveRange() {
+        Range r = new Range(5.0, 15.0);
+        assertFalse(r.contains(16.0));
+    }
+
+    // ---------------------------
+    // intersects(double, double)
+    // ---------------------------
+
+    @Test
+    void testIntersectsFullyInside() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.intersects(7.0, 10.0));
+    }
+
+    @Test
+    void testIntersectsLeftOverlap() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.intersects(0.0, 7.0));
+    }
+
+    @Test
+    void testIntersectsRightOverlap() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.intersects(10.0, 20.0));
+    }
+
+    @Test
+    void testIntersectsExactMatch() {
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.intersects(5.0, 15.0));
     }
 
     @Test
     void testIntersectsTouchingBoundary() {
-        Range r = new Range(0, 10);
-        assertTrue(r.intersects(10, 20));
+        Range r = new Range(5.0, 15.0);
+        assertTrue(r.intersects(15.0, 20.0));
     }
 
     @Test
-    void testIntersectsDisjointBelow() {
-        Range r = new Range(0, 10);
-        assertFalse(r.intersects(-10, -1));
+    void testIntersectsCompletelyLeft() {
+        Range r = new Range(5.0, 15.0);
+        assertFalse(r.intersects(0.0, 4.0));
     }
 
     @Test
-    void testIntersectsDisjointAbove() {
-        Range r = new Range(0, 10);
-        assertFalse(r.intersects(11, 20));
+    void testIntersectsCompletelyRight() {
+        Range r = new Range(5.0, 15.0);
+        assertFalse(r.intersects(16.0, 20.0));
     }
 
     // ---------------------------
-    // constrain()
+    // constrain(double)
     // ---------------------------
 
     @Test
-    void testConstrainValueInsideRange() {
-        Range r = new Range(0, 10);
-        assertEquals(5, r.constrain(5), 0.0001);
+    void testConstrainInside() {
+        Range r = new Range(5.0, 15.0);
+        assertEquals(10.0, r.constrain(10.0), 0.0001);
     }
 
     @Test
-    void testConstrainValueAtLowerBoundary() {
-        Range r = new Range(0, 10);
-        assertEquals(0, r.constrain(0), 0.0001);
+    void testConstrainLowerBoundary() {
+        Range r = new Range(5.0, 15.0);
+        assertEquals(5.0, r.constrain(5.0), 0.0001);
     }
 
     @Test
-    void testConstrainValueAtUpperBoundary() {
-        Range r = new Range(0, 10);
-        assertEquals(10, r.constrain(10), 0.0001);
+    void testConstrainUpperBoundary() {
+        Range r = new Range(5.0, 15.0);
+        assertEquals(15.0, r.constrain(15.0), 0.0001);
     }
 
     @Test
-    void testConstrainValueBelowRange() {
-        Range r = new Range(0, 10);
-        assertEquals(0, r.constrain(-5), 0.0001);
+    void testConstrainBelowRange() {
+        Range r = new Range(5.0, 15.0);
+        assertEquals(5.0, r.constrain(2.0), 0.0001);
     }
 
     @Test
-    void testConstrainValueAboveRange() {
-        Range r = new Range(0, 10);
-        assertEquals(10, r.constrain(20), 0.0001);
+    void testConstrainAboveRange() {
+        Range r = new Range(5.0, 15.0);
+        assertEquals(15.0, r.constrain(20.0), 0.0001);
     }
 }
+
