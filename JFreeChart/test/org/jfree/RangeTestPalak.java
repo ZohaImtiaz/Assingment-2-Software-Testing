@@ -1,11 +1,6 @@
-package test;
-
-import static org.junit.jupiter.api.Assertions.*;
+package org.jfree.data;
 
 import org.jfree.data.Range;
-import org.junit.jupiter.api.Test;
-
-package org.jfree.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -66,4 +61,5 @@ public class RangeTestPalak {
         Range result = Range.expandToInclude(base, 5.0);
         assertRangeEquals(1.0, 5.0, result);
     }
+
 }
