@@ -17,6 +17,7 @@ class RangeTestPawan {
     }
 
 
+
   
   // equals() Tests
 
@@ -35,7 +36,7 @@ class RangeTestPawan {
 
   
   @Test
-  void testEqualsDifferentUpeer() {
+  void testEqualsDifferentUpper() {
     Range different = new Range(2, 7);
     assertFalse(range1.equals(different));
   }
@@ -53,6 +54,7 @@ class RangeTestPawan {
   }
 
 
+    
     
     
   //combine() Tests
@@ -84,7 +86,55 @@ class RangeTestPawan {
         Range combined = Range.combine(null, null);
         assertNull(combined);
     }
+
+
     
+
+    //toString() Test
+
+    @Test
+    void testToString() {
+        assertEquals("Range[2.0,6.0]", range1.toString());
+    }
+
+
+    
+
+
+    //expand() Tests
+    
+    @Test
+    void testExpandWithPositiveMargins() {
+        Range expanded = Range.expand(range1, 0.5, 0.5);
+        assertEquals(0.0, expanded.getLowerBound());
+        assertEquals(8.0, expanded.getUpperBound());
+    }
+
+
+    @Test
+    void testExpandWithZeroMargins() {
+        Range expanded = Range.expand(range1, 0.0, 0.0);
+        assertEquals(2.0, expanded.getLowerBound());
+        assertEquals(6.0, expanded.getUpperBound());
+     }
+
+
+    @Test
+    void testExpandNegativeMargins() {
+        Range expanded = Range.expand(range1, -0.25, -0.25);
+        assertEquals(3.0, expanded.getLowerBound());
+        assertEquals(5.0, expanded.getUpperBound());
+    }
+
+
+    @Test
+    void testExpandNullRange() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Range.expand(null, 0.1, 0.1);
+        });
+
+    }
+}
     
 
   
