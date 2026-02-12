@@ -52,7 +52,40 @@ class RangeTestPawan {
     assertFalse(range1.equals("NotARange"));
   }
 
-  
+
+    
+    
+  //combine() Tests
+
+    @Test
+    void testCombineTwoValidRanges() {
+        Range combined = Range.combine(range1, range2);
+        assertEquals(2.0, combined.getLowerBound());
+        assertEquals(8.0, combined.getUpperBound());
+    }
+
+
+    @Test
+    void testCombineFirstNull() {
+        Range combined = Range.combine(null, range2);
+        assertEquals(range2, combined);
+    }
+
+
+    @Test
+    void testCombineSecondNull() {
+        Range combined = Range.combine(range1, null);
+        assertEquals(range1, combined);
+    }
+
+
+    @Test
+    void testCombineBothNull() {
+        Range combined = Range.combine(null, null);
+        assertNull(combined);
+    }
+    
+    
 
   
 
