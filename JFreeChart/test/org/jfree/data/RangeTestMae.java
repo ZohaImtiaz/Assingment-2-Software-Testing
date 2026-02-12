@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class RangeTestMae {
 
-    // ---------------------------
     // getCentralValue() Tests
-    // ---------------------------
 
     @Test
     void testGetCentralValueTypicalRange() {
@@ -33,10 +31,7 @@ class RangeTestMae {
         assertEquals(5.0, r.getCentralValue(), 0.0001);
     }
 
-    // ---------------------------
     // contains(double) Tests
-    // ---------------------------
-
     @Test
     void testContainsInside() {
         Range r = new Range(5.0, 15.0);
@@ -67,9 +62,7 @@ class RangeTestMae {
         assertFalse(r.contains(16.0));
     }
 
-    // ---------------------------
     // intersects(double, double)
-    // ---------------------------
 
     @Test
     void testIntersectsFullyInside() {
@@ -113,10 +106,7 @@ class RangeTestMae {
         assertFalse(r.intersects(16.0, 20.0));
     }
 
-    // ---------------------------
     // constrain(double)
-    // ---------------------------
-
     @Test
     void testConstrainInside() {
         Range r = new Range(5.0, 15.0);
@@ -147,4 +137,5 @@ class RangeTestMae {
         assertEquals(15.0, r.constrain(20.0), 0.0001);
     }
 }
+
 
