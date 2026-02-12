@@ -7,9 +7,11 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
     
     RangeTestMae.class,
-    RangeTestZoha.class
+    RangeTestZoha.class,
+    RangeTestPawan.class,
     // add other test classes here
 })
 public class AllTestSuite {
 }
+
 
